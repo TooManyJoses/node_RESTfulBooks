@@ -9,7 +9,12 @@ const db = mongoose.connect("mongodb://localhost/bookAPI");
 const Book = require("./models/bookModel");
 
 bookRouter.route("/books").get((req, res) => {
-  Book.find((err, books) => {
+  const query = {};
+  if(req.query.title){
+    query.title = req.query.title;
+  }
+
+  Book.find(query, (err, books) => {
     if (err) {
       return res.send(err);
     } else {
