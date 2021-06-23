@@ -10,8 +10,8 @@ const Book = require("./models/bookModel");
 
 bookRouter.route("/books").get((req, res) => {
   const query = {};
-  if(req.query.title){
-    query.title = req.query.title;
+  if(req.query.genre){
+    query.genre = req.query.genre;
   }
 
   Book.find(query, (err, books) => {
