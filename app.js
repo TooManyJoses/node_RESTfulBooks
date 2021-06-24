@@ -7,7 +7,11 @@ const Book = require("./models/bookModel");
 const bookRouter = require('./routes/bookRouter')(Book);
 const port = process.env.PORT || 3000;
 
-const db = mongoose.connect("mongodb://localhost/bookAPI");
+if (process.env.ENV === 'TEST') {
+  const db = mongoose.connect("mongodb://localhost/bookAPI_TEST");
+} else {
+  const db = mongoose.connect("mongodb://localhost/bookAPI");
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -18,6 +22,8 @@ app.get("/", (req, res) => {
   res.send("success!");
 });
 
-app.listen(port, () => {
+app.server = app.listen(port, () => {
   console.log("Listening on port ", port);
 });
+
+module.exports = app;
